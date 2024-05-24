@@ -1,0 +1,18 @@
+@model MeetingInfo
+@{
+ViewBag.Title = "Toplanti Basvuru";
+Layout = "_Layout2";
+}
+<main class="text-center">
+    <h1 class="h4">@ViewData["Selamlama"]</h1>
+    <p>Toplanti katilim durumunuzu bildiriniz</p>
+
+    <div class="card my-2">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">@Model.Location</li>
+            <li class="list-group-item">@Model.Date.ToString("dd/MM/yyyy HH:mm:ss")</li>
+            <li class="list-group-item">@Model.NumberOfPeople katılımcı</li>
+        </ul>
+    </div>
+    <a class="btn btn-sm btn-outline-primary" href="/meeting/apply">Basvuru Yap</a>
+</main>
