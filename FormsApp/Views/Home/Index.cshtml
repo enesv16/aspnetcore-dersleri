@@ -1,0 +1,72 @@
+﻿@model ProductViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="card card-body my-3">
+    <form method="get">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-11">
+                    <select 
+                        name="category" 
+                        class="form-select" 
+                        asp-items="@(Model.Categories != null 
+                                    ? new SelectList(Model.Categories, "CategoryId", "CategoryName", Model.SelectedCategory) 
+                                    : new SelectList(new List<Category>()))">
+                        <option value="0">Hepsi</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary">Filtrele</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<form asp-action="EditProducts" method="post">
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th style="width: 100px;">@Html.DisplayNameFor(m => m.Products.FirstOrDefault().ProductId)</th>
+            <th style="width: 100px;">@Html.DisplayNameFor(m => m.Products.FirstOrDefault().Image)</th>
+            <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().ProductName)</th>
+            <th style="width: 100px;">@Html.DisplayNameFor(m => m.Products.FirstOrDefault().Price)</th>
+            <th></th>
+            <th style="width: 140px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Products != null)
+        {
+            for (int i = 0; i < Model.Products.Count; i++)
+            {
+                var product = Model.Products[i];
+                <tr>
+                    <td>
+                        @product.ProductId
+                        <input type="hidden" asp-for="@product.ProductId">
+                    </td>
+                    <td>
+                        <img src="~/img/@product.Image" class="img-fluid" alt="">
+                    </td>
+                    <td>@product.ProductName</td>
+                    <td>@product.Price</td>
+                    <td>
+                        <input type="checkbox" asp-for="@product.IsActive">
+                    </td>
+                    <td>
+                        <a href="/Home/Edit/@product.ProductId" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="/Home/Delete/@product.ProductId" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<button type="submit" class="btn btn-primary">Kaydet</button>
+</form>

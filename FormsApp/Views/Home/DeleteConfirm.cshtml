@@ -1,0 +1,11 @@
+@model Product
+<div>
+    <p>
+        @Model.ProductName isimli ürününü silmek istediğine emin misisniz?
+        <form asp-controller="Home" asp-action="Delete" method="post">
+            <input type="hidden" name="ProductId" value="@Model.ProductId">
+            <button type="submit" class="btn btn-danger">Evet</button>
+            <a href="/" class="btn btn-primary">Hayır</a>
+        </form>
+    </p>
+</div>
