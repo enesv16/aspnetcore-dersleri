@@ -19,11 +19,11 @@ public static class SeedData
             if (!context.Tags.Any())
             {
                 context.Tags.AddRange(
-                    new Entity.Tag { Text = "web programlama", Url="web-programlama"},
-                    new Entity.Tag { Text = "backend" , Url="backend"},
-                    new Entity.Tag { Text = "frontend" , Url="frontend"},
-                    new Entity.Tag { Text = "php", Url="php" },
-                    new Entity.Tag { Text = "fullstack", Url="fullstack" }
+                    new Entity.Tag { Text = "web programlama", Url="web-programlama", Color= TagColors.warning},
+                    new Entity.Tag { Text = "backend" , Url="backend",Color= TagColors.danger},
+                    new Entity.Tag { Text = "frontend" , Url="frontend",Color= TagColors.primary},
+                    new Entity.Tag { Text = "php", Url="php", Color= TagColors.secondary },
+                    new Entity.Tag { Text = "fullstack", Url="fullstack", Color= TagColors.success}
                 );
                 context.SaveChanges();
             }
