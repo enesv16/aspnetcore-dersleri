@@ -1,3 +1,4 @@
+using System.Formats.Tar;
 using BlogApp.Data.Abstract;
 using BlogApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,22 +17,21 @@ namespace BlogApp.Controllers
             _postRepository = postRepository;
 
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string tag)
         {
-            var posts = new PostsViewModel
+            var posts = _postRepository.Posts;
+
+            if (!string.IsNullOrEmpty(tag))
             {
-                Posts = _postRepository.Posts.ToList(),
-            };
-            return View(posts);
+                posts = posts.Where(p => p.Tags.Any(t => t.Url == tag));
+            }
+
+            return View(new PostsViewModel { Posts = await posts.ToListAsync() });
         }
 
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string url)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var post = await _postRepository.Posts.FirstOrDefaultAsync(p=> p.PostId == id);
+            var post = await _postRepository.Posts.FirstOrDefaultAsync(p => p.Url == url);
             if (post == null)
             {
                 return NotFound();
