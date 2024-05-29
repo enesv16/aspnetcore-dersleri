@@ -17,7 +17,7 @@ namespace efcoreApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var kurslar = await _context.Kurslar.Include(k=>k.Ogretmen).ToListAsync();
+            var kurslar = await _context.Kurslar.Include(k => k.Ogretmen).ToListAsync();
             return View(kurslar);
 
         }
@@ -30,11 +30,16 @@ namespace efcoreApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Kurs model)
+        public async Task<IActionResult> Create(KursViewModel model)
         {
-            _context.Kurslar.Add(model);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
+            if (ModelState.IsValid)
+            {
+                _context.Kurslar.Add(new Kurs() { KursId = model.KursId, Baslik = model.Baslik, OgretmenId = model.OgretmenId });
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Ogretmenler = new SelectList(await _context.Ogretmenler.ToListAsync(), "OgretmenId", "OgretmenAdSoyad");
+            return View(model);
         }
 
         [HttpGet]
@@ -46,17 +51,17 @@ namespace efcoreApp.Controllers
             }
             var kurs = await _context
                             .Kurslar
-                            .Include(o=>o.Ogrenciler)
-                            .ThenInclude(o=>o.Ogrenci)
-                            .Select(k=> new KursViewModel
+                            .Include(o => o.Ogrenciler)
+                            .ThenInclude(o => o.Ogrenci)
+                            .Select(k => new KursViewModel
                             {
                                 KursId = k.KursId,
                                 Baslik = k.Baslik,
                                 OgretmenId = k.OgretmenId,
                                 Ogrenciler = k.Ogrenciler
                             })
-                            .FirstOrDefaultAsync(m=> m.KursId == id);
-                            
+                            .FirstOrDefaultAsync(m => m.KursId == id);
+
             if (kurs == null)
             {
                 return NotFound();
@@ -77,7 +82,7 @@ namespace efcoreApp.Controllers
             {
                 try
                 {
-                    _context.Update(new Kurs(){KursId = model.KursId, Baslik= model.Baslik, OgretmenId= model.OgretmenId});
+                    _context.Update(new Kurs() { KursId = model.KursId, Baslik = model.Baslik, OgretmenId = model.OgretmenId });
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -93,7 +98,20 @@ namespace efcoreApp.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            return View();
+            var kurs = await _context
+                            .Kurslar
+                            .Include(o => o.Ogrenciler)
+                            .ThenInclude(o => o.Ogrenci)
+                            .Select(k => new KursViewModel
+                             {
+                                KursId = k.KursId,
+                                Baslik = k.Baslik,
+                                OgretmenId = k.OgretmenId,
+                                Ogrenciler = k.Ogrenciler
+                            })
+                            .FirstOrDefaultAsync(m => m.KursId == id);
+            ViewBag.Ogretmenler = new SelectList(await _context.Ogretmenler.ToListAsync(), "OgretmenId", "OgretmenAdSoyad");
+            return View(kurs);
         }
 
         [HttpGet]
@@ -112,9 +130,9 @@ namespace efcoreApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete([FromForm]int id)
+        public async Task<IActionResult> Delete([FromForm] int id)
         {
-            var kurs =await _context.Kurslar.FindAsync(id);
+            var kurs = await _context.Kurslar.FindAsync(id);
             if (kurs == null)
             {
                 return NotFound();

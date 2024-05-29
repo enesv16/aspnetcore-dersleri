@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,8 @@ namespace efcoreApp.Data
         public int OgretmenId { get; set; }
         public string? Ad { get; set; }
         public string? Soyad { get; set; }
+
+        [DisplayName("Öğretmen Ad Soyadı")]
         public string? OgretmenAdSoyad
         {
             get

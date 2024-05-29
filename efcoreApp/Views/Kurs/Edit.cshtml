@@ -6,7 +6,9 @@
     <div class="col-8">
 
         <form asp-controller="Kurs" asp-action="Edit" method="post">
+            
             <input type="hidden" asp-for="KursId">
+            <div asp-validation-summary="All"></div>
             <div class="mb-3">
                 <label asp-for="Baslik" class="form-label">Kurs Başlığı</label>
                 <input asp-for="Baslik" class="form-control">
@@ -28,7 +30,6 @@
             @foreach(var item in @Model.Ogrenciler)
             {
                 <li>@item.Ogrenci.OgrenciAdSoyad</li>
-
             }
         </ul>
     </div>

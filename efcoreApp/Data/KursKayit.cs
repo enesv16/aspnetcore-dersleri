@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace efcoreApp.Data
@@ -13,6 +14,7 @@ namespace efcoreApp.Data
         public int KursId { get; set; }
         public Kurs Kurs { get; set; } = null!;
 
+        [DisplayName("Kayıt Tarihi")]
         public DateTime KayitTarihi { get; set; }
     }
 }
