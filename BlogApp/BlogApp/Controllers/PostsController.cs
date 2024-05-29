@@ -33,13 +33,20 @@ namespace BlogApp.Controllers
         {
             var post = await _postRepository
                             .Posts
-                            .Include(x=> x.Tags)
+                            .Include(x => x.Tags)
+                            .Include(x => x.Comments)
+                            .ThenInclude(x => x.User)
                             .FirstOrDefaultAsync(p => p.Url == url);
             if (post == null)
             {
                 return NotFound();
             }
             return View(post);
+        }
+
+        public IActionResult AddComment(int PostId, string UserName, string Text)
+        {
+            return View();
         }
 
     }
