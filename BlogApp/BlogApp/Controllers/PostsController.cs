@@ -1,5 +1,6 @@
 using System.Formats.Tar;
 using BlogApp.Data.Abstract;
+using BlogApp.Entity;
 using BlogApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +12,12 @@ namespace BlogApp.Controllers
     {
 
         private IPostRepository _postRepository;
+        private ICommentRepository _commentRepository;
 
-        public PostsController(IPostRepository postRepository)
+        public PostsController(IPostRepository postRepository, ICommentRepository commentRepository)
         {
             _postRepository = postRepository;
+            _commentRepository = commentRepository;
 
         }
         public async Task<IActionResult> Index(string tag)
@@ -44,9 +47,25 @@ namespace BlogApp.Controllers
             return View(post);
         }
 
-        public IActionResult AddComment(int PostId, string UserName, string Text)
+
+        [HttpPost]
+        public JsonResult AddComment(int PostId, string UserName, string Text)
         {
-            return View();
+            var entity = new Comment
+            {
+                PostId = PostId,
+                PublishedOn = DateTime.Now,
+                User = new User { UserName = UserName, Image = "avatar.jpg" },
+                Text = Text,
+            };
+            _commentRepository.CreateComment(entity);
+
+            return Json(new{
+                UserName,
+                Text,
+                entity.PublishedOn,
+                entity.User.Image
+            });
         }
 
     }

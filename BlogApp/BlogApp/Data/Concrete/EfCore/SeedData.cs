@@ -1,4 +1,5 @@
 ﻿using BlogApp.Entity;
+using System;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlogApp.Data.Concrete.Efcore;
@@ -50,8 +51,8 @@ public static class SeedData
                         Image = "1.jpg",
                         UserId = 1,
                         Comments = new List<Comment> {
-                            new Comment{Text="İyi bir kurs.", PublishedOn= new DateTime(), UserId=1},
-                            new Comment{Text="Çok faydalandığım  bir kurs.", PublishedOn= new DateTime(), UserId=2},
+                            new Comment{Text="İyi bir kurs.", PublishedOn= DateTime.Now.AddDays(-3) , UserId=1},
+                            new Comment{Text="Çok faydalandığım  bir kurs.", PublishedOn= DateTime.Now.AddDays(-9), UserId=2},
                         }
                     },
                     new Post
