@@ -32,8 +32,9 @@ public static class SeedData
             if (!context.Users.Any())
             {
                 context.Users.AddRange(
-                    new User { UserName = "enesvardar", Image = "p1.jpg" },
-                    new User { UserName = "dilarasm", Image = "p2.jpg" }
+                    new User { UserName = "enesvardar",Name= "Enes Vardar",Email="enes@gmail.com",Password="123456", Image = "p1.jpg"},
+                    new User { UserName = "dilaravardar",Name= "Dilara Vardar",Email="dilara@gmail.com",Password="123456", Image = "p1.jpg"}
+
                 );
                 context.SaveChanges();
             }
@@ -43,7 +44,8 @@ public static class SeedData
                     new Post
                     {
                         Title = "Asp.net Core",
-                        Content = "Asp.net Core dersleri",
+                        Description = "Asp.net Core Hakkında",
+                        Content = "Asp.net Core dersleri Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin est enim, venenatis nec lacus quis, consequat.",
                         Url = "aspnet-core",
                         IsActive = true,
                         PublishedOn = DateTime.Now.AddDays(-10),
@@ -58,7 +60,8 @@ public static class SeedData
                     new Post
                     {
                         Title = "Php Core",
-                        Content = "Php Core dersleri",
+                        Description = "Php Core dersleri",
+                        Content = "Php Core dersleri Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin est enim, venenatis nec lacus quis, consequat.",
                         Url = "php-core",
                         IsActive = true,
                         PublishedOn = DateTime.Now.AddDays(-20),
@@ -69,7 +72,8 @@ public static class SeedData
                     new Post
                     {
                         Title = "Django",
-                        Content = "Django dersleri",
+                        Description = "Django dersleri",
+                        Content = "Django dersleri Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin est enim, venenatis nec lacus quis, consequat.",
                         Url = "django",
                         IsActive = true,
                         PublishedOn = DateTime.Now.AddDays(-5),
@@ -80,7 +84,8 @@ public static class SeedData
                     new Post
                     {
                         Title = "React",
-                        Content = "React dersleri",
+                        Description = "React dersleri",
+                        Content = "React dersleri Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin est enim, venenatis nec lacus quis, consequat.",
                         Url = "react",
                         IsActive = true,
                         PublishedOn = DateTime.Now.AddDays(-30),
@@ -91,7 +96,8 @@ public static class SeedData
                     new Post
                     {
                         Title = "Angular",
-                        Content = "Angular dersleri",
+                        Description = "Angular dersleri",
+                        Content = "Angular dersleri Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin est enim, venenatis nec lacus quis, consequat.",
                         Url = "angular",
                         IsActive = true,
                         PublishedOn = DateTime.Now.AddDays(-50),
@@ -102,7 +108,8 @@ public static class SeedData
                     new Post
                     {
                         Title = "Web Tasarım",
-                        Content = "Web Tasarım dersleri",
+                        Description = "Web Tasarım dersleri",
+                        Content = "Web Tasarım dersleri Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin est enim, venenatis nec lacus quis, consequat.",
                         Url = "web-tasarim",
                         IsActive = true,
                         PublishedOn = DateTime.Now.AddDays(-60),
