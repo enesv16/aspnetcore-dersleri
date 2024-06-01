@@ -16,7 +16,9 @@ builder.Services.AddScoped<ICommentRepository, EfCommentRepository>();
 builder.Services.AddScoped<IUserRepository, EfUserRepository>();
 
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(); 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie( options=>{
+    options.LoginPath = "/Users/Login";
+}); 
 
 var app = builder.Build();
 
@@ -39,6 +41,13 @@ app.MapControllerRoute(
     pattern: "posts/tag/{tag}",
     defaults: new { controller = "Posts", action = "Index" }
 );
+
+app.MapControllerRoute(
+    name: "user-profile",
+    pattern: "profile/{username}",
+    defaults: new { controller = "Users", action = "Profile" }
+);
+
 
 app.MapControllerRoute(
     name: "default",

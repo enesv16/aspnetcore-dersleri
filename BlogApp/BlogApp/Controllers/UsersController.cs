@@ -39,10 +39,11 @@ namespace BlogApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userRepository.Users.FirstOrDefaultAsync(x=> x.UserName == model.UserName || x.Email == model.Email);
+                var user = await _userRepository.Users.FirstOrDefaultAsync(x => x.UserName == model.UserName || x.Email == model.Email);
                 if (user == null)
                 {
-                     _userRepository.CreateUser(new User{
+                    _userRepository.CreateUser(new User
+                    {
                         UserName = model.UserName,
                         Email = model.Email,
                         Password = model.Password,
@@ -108,6 +109,26 @@ namespace BlogApp.Controllers
                 ModelState.AddModelError("", "Kullanıcı adı veya şifre yanlış");
             }
             return View(model);
+        }
+
+
+        public IActionResult Profile(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                return NotFound();
+            }
+            var user = _userRepository
+                            .Users
+                            .Include(u => u.Posts)
+                            .Include(u => u.Comments)
+                            .ThenInclude(u => u.Post)
+                            .FirstOrDefault(u => u.UserName == username);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
         }
 
     }
