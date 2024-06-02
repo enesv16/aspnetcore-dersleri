@@ -30,7 +30,7 @@ namespace IdentityApp.Models
             {
                 user = new AppUser {
                     FullName = "Enes Vardar",
-                    UserName = "enes@gmail.com",
+                    UserName = "adminUser",
                     Email = "enes@gmail.com",
                     PhoneNumber="1233424123"               
                 };
